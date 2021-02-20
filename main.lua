@@ -890,114 +890,6 @@ end
 
 
 
-function ding.onClick()
-  InputLayout={
-    LinearLayout;
-    orientation="vertical";
-    Focusable=true,
-    FocusableInTouchMode=true,
-    id="din",
-
-    {
-      EditText;
-      hint="请输入您要发送的内容";
-      layout_marginTop="5dp";
-      layout_width="80%w";
-      layout_gravity="center",
-      id="text";
-      text="";
-    };
-  };
-  AlertDialog.Builder(this)
-  .setTitle("钉钉机器人")
-  .setView(loadlayout(InputLayout))
-  .setPositiveButton("确定",{onClick=function(v)
-      --后台发送短信
-      local te = tostring(text.text)
-      local header = {}
-      local header={["Content-Type"]= [[application/json]],}
-      local dat =[[{"msgtype":"text","text":{"content":"@你 ]]..te..[["}}]]
-      local url = "https://oapi.dingtalk.com/robot/send?access_token=9db4d9fd558fd1bd70d8a5f1e7a79c6a185ff4529724e13f7ad50d56bd10bb45"
-      --Http.setUserAgent("Mozilla/5.0 (Linux; Android 6.0.1; OPPO R9s Plus Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/55.0.2883.91 Mobile Safari/537.36")
-      Http.setHeader(nil)
-      Http.post(url,dat,nil,nil,header,function(Stat,Content)
-        if Stat == 200 then
-          local ber = Content
-          print (ber)
-          print ("ok")
-
-          -- 回复成功，复制函数内部值
-         else
-          print ("发送失败")
-          -- 回复失败，载入默认一言
-        end
-      end)
-
-  end})
-
-  .setNegativeButton("取消",nil)
-  .show()
-end
-function ding.onLongClick()
-
-  InputLayout={
-    LinearLayout;
-    orientation="vertical";
-    Focusable=true,
-    FocusableInTouchMode=true,
-    id="din1",
-
-    {
-      EditText;
-      hint="json代码";
-      layout_marginTop="5dp";
-      layout_width="80%w";
-      layout_gravity="center",
-      id="json1";
-      text="";
-    };
-    {
-      EditText;
-      hint="目标url";
-      layout_marginTop="5dp";
-      layout_width="80%w";
-      layout_gravity="center",
-      id="url1";
-      text="";
-    };
-  };
-  AlertDialog.Builder(this)
-  .setTitle("钉钉机器人自定义模式")
-  .setView(loadlayout(InputLayout))
-  .setPositiveButton("确定",{onClick=function(v)
-      --后台发送短信
-      local ate = tostring(json1.text)
-      local url = tostring(url1.text)
-      local header = {}
-      local header={["Content-Type"]= [[application/json]],}
-      local dat =ate
-      print (dat..url..ate)
-      --Http.setUserAgent("Mozilla/5.0 (Linux; Android 6.0.1; OPPO R9s Plus Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/55.0.2883.91 Mobile Safari/537.36")
-      Http.setHeader(nil)
-      Http.post(url,dat,nil,nil,header,function(Stat,Content)
-        if Stat == 200 then
-          Hitokoto = Content
-          print (Hitokoto)
-
-          -- 回复成功，复制函数内部值
-         else
-          print ("发送失败")
-          -- 回复失败，载入默认一言
-        end
-      end)
-
-  end})
-  .setNeutralButton("tips",{onClick=function(tip)
-      进入子页面("tip")
-  end})
-  .setNegativeButton("取消",nil)
-  .show()
-end
 
 function music.onClick()
   进入子页面("music")
@@ -1054,6 +946,63 @@ function soti.onClick()
 end
 
 
+function ding.onClick()
+
+  InputLayout={
+    LinearLayout;
+    orientation="vertical";
+    Focusable=true,
+    FocusableInTouchMode=true,
+    id="din1",
+
+    {
+      EditText;
+      hint="要说的话";
+      layout_marginTop="5dp";
+      layout_width="80%w";
+      layout_gravity="center",
+      id="json1";
+      text="";
+    };
+    {
+      EditText;
+      hint="目标url";
+      layout_marginTop="5dp";
+      layout_width="80%w";
+      layout_gravity="center",
+      id="url1";
+      text="";
+    };
+  };
+  AlertDialog.Builder(this)
+  .setTitle("钉钉机器人---自定义")
+  .setView(loadlayout(InputLayout))
+  .setPositiveButton("确定",{onClick=function(v)
+      --后台发送短信
+      local ate =[[{"msgtype":"text","text":{"content":"]]..tostring(json1.text)..[["}}]]
+      local url = tostring(url1.text)
+      local header = {}
+      local header={["Content-Type"]= [[application/json]],}
+      local dat =ate
+      print (dat..url..ate)
+      --Http.setUserAgent("Mozilla/5.0 (Linux; Android 6.0.1; OPPO R9s Plus Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/55.0.2883.91 Mobile Safari/537.36")
+      Http.setHeader(nil)
+      Http.post(url,dat,nil,nil,header,function(Stat,Content)
+        if Stat == 200 then
+          Hitokoto = Content
+          Toast.makeText(activity,"发送成功！",Toast.LENGTH_SHORT).show()
+
+          -- 回复成功，复制函数内部值
+         else
+          Toast.makeText(activity,"发送失败！",Toast.LENGTH_SHORT).show()
+          -- 回复失败，载入默认一言
+        end
+      end)
+
+  end})
+  .setNegativeButton("取消",nil)
+  .show()
+end
 
 --作业单附属创建.不属于任何函数
 if file_exists("/storage/emulated/0/Android/data/com.berclear/"..os.date("%Y-%m-%d")..".zy")==false
