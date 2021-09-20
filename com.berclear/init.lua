@@ -1,0 +1,21 @@
+appname="倒计时"
+appver="8.8.8"
+appcode="8"
+appsdk="19"
+path_pattern=""
+packagename="com.berclear.com"
+theme="Theme_DeviceDefault_Light_NoActionBar_Fullscreen"
+app_key="bszydxh"
+app_channel="bszydxh"
+developer="bszydxh"
+description=""
+debugmode=false
+user_permission={
+  "ACCESS_NETWORK_STATE",
+  "ACCESS_WIFI_STATE",
+  "INTERNET",
+  "READ_EXTERNAL_STORAGE",
+  "READ_PHONE_STATE",
+  "SYSTEM_ALERT_WINDOW",
+  "WRITE_EXTERNAL_STORAGE"
+}
